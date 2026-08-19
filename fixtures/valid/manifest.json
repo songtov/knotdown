@@ -1,0 +1,114 @@
+{
+  "description": "Valid parser, resolver, graph, and context conformance cases.",
+  "cases": [
+    {
+      "name": "minimal-document",
+      "files": {
+        "knowledge/index.md": "---\nid: \"019ff950-0001-7000-8000-000000000001\"\ntype: \"concept\"\n---\n\n# Minimal\n\nA minimal valid document.\n"
+      },
+      "expected": { "documents": 1, "imports": 0, "references": 0, "mentions": 0 }
+    },
+    {
+      "name": "valid-local-import",
+      "files": {
+        "knowledge/a.md": "---\nid: \"019ff950-0002-7000-8000-000000000002\"\ntype: \"concept\"\n---\n\n[target]: ./b.md\n\n# A\n\nUse [target].\n",
+        "knowledge/b.md": "---\nid: \"019ff950-0002-7000-8000-000000000003\"\ntype: \"concept\"\n---\n\n# B\n\nTarget B.\n"
+      },
+      "expected": { "documents": 2, "imports": 1, "references": 1, "mentions": 0 }
+    },
+    {
+      "name": "external-url-reference",
+      "files": {
+        "knowledge/index.md": "---\nid: \"019ff950-0003-7000-8000-000000000004\"\ntype: \"reference\"\n---\n\n[RFC]: https://www.rfc-editor.org/rfc/rfc9110\n\n# External\n\nRead [RFC].\n"
+      },
+      "expected": { "documents": 1, "imports": 0, "references": 0, "mentions": 0 }
+    },
+    {
+      "name": "unicode-korean-label",
+      "files": {
+        "knowledge/source.md": "---\nid: \"019ff950-0004-7000-8000-000000000005\"\ntype: \"procedure\"\n---\n\n[인증]: ./target.md\n\n# 절차\n\n[인증]을 완료한다.\n",
+        "knowledge/target.md": "---\nid: \"019ff950-0004-7000-8000-000000000006\"\ntype: \"concept\"\n---\n\n# 인증\n\n신원 확인 과정이다.\n"
+      },
+      "expected": { "documents": 2, "imports": 1, "references": 1, "mentions": 0 }
+    },
+    {
+      "name": "explicit-full-reference",
+      "files": {
+        "knowledge/source.md": "---\nid: \"019ff950-0005-7000-8000-000000000007\"\ntype: \"procedure\"\n---\n\n[auth]: ./target.md\n\n# Procedure\n\nUse [identity check][auth].\n",
+        "knowledge/target.md": "---\nid: \"019ff950-0005-7000-8000-000000000008\"\ntype: \"concept\"\n---\n\n# Auth\n\nIdentity check.\n"
+      },
+      "expected": { "documents": 2, "imports": 1, "references": 1, "mentions": 0 }
+    },
+    {
+      "name": "implicit-cjk-mention",
+      "files": {
+        "knowledge/source.md": "---\nid: \"019ff950-0006-7000-8000-000000000009\"\ntype: \"procedure\"\n---\n\n[인증]: ./target.md\n\n# 절차\n\n인증이 성공한다.\n",
+        "knowledge/target.md": "---\nid: \"019ff950-0006-7000-8000-00000000000a\"\ntype: \"concept\"\n---\n\n# Authentication\n\nIdentity proof.\n"
+      },
+      "expected": { "documents": 2, "imports": 1, "references": 0, "mentions": 1, "warnings": ["KB204"] }
+    },
+    {
+      "name": "circular-import",
+      "files": {
+        "knowledge/a.md": "---\nid: \"019ff950-0007-7000-8000-00000000000b\"\ntype: \"concept\"\n---\n\n[b]: ./b.md\n\n# A\n\nSee [b].\n",
+        "knowledge/b.md": "---\nid: \"019ff950-0007-7000-8000-00000000000c\"\ntype: \"concept\"\n---\n\n[a]: ./a.md\n\n# B\n\nSee [a].\n"
+      },
+      "expected": { "documents": 2, "imports": 2, "references": 2, "mentions": 0 }
+    },
+    {
+      "name": "deprecated-target",
+      "files": {
+        "knowledge/source.md": "---\nid: \"019ff950-0008-7000-8000-00000000000d\"\ntype: \"concept\"\n---\n\n[old]: ./target.md\n\n# Current\n\nSee [old].\n",
+        "knowledge/target.md": "---\nid: \"019ff950-0008-7000-8000-00000000000e\"\ntype: \"concept\"\nstatus: \"deprecated\"\n---\n\n# Old\n\nDeprecated concept.\n"
+      },
+      "expected": { "documents": 2, "imports": 1, "references": 1, "mentions": 0, "warnings": ["KB205"] }
+    },
+    {
+      "name": "fragment-link",
+      "files": {
+        "knowledge/source.md": "---\nid: \"019ff950-0009-7000-8000-00000000000f\"\ntype: \"concept\"\n---\n\n[part]: ./target.md#details\n\n# Source\n\nSee [part].\n",
+        "knowledge/target.md": "---\nid: \"019ff950-0009-7000-8000-000000000010\"\ntype: \"concept\"\n---\n\n# Target\n\n## Details\n\nA section.\n"
+      },
+      "expected": { "documents": 2, "imports": 1, "references": 1, "mentions": 0, "warnings": ["KB206"] }
+    },
+    {
+      "name": "deterministic-ordering",
+      "files": {
+        "knowledge/z.md": "---\nid: \"019ff950-0010-7000-8000-000000000011\"\ntype: \"concept\"\n---\n\n# Zed\n\nLast by path.\n",
+        "knowledge/a.md": "---\nid: \"019ff950-0010-7000-8000-000000000012\"\ntype: \"concept\"\n---\n\n# Alpha\n\nFirst by path.\n",
+        "knowledge/m.md": "---\nid: \"019ff950-0010-7000-8000-000000000013\"\ntype: \"concept\"\n---\n\n# Middle\n\nMiddle by path.\n"
+      },
+      "expected": { "documents": 3, "imports": 0, "references": 0, "mentions": 0 }
+    },
+    {
+      "name": "context-budget-source",
+      "files": {
+        "knowledge/index.md": "---\nid: \"019ff950-0011-7000-8000-000000000014\"\ntype: \"concept\"\nsummary: \"A short summary.\"\n---\n\n# Budgeted\n\nThis body is intentionally longer than its summary. This body is intentionally longer than its summary. This body is intentionally longer than its summary.\n"
+      },
+      "expected": { "documents": 1, "imports": 0, "references": 0, "mentions": 0 }
+    },
+    {
+      "name": "fenced-code-is-inert",
+      "files": {
+        "knowledge/index.md": "---\nid: \"019ff950-0012-7000-8000-000000000015\"\ntype: \"concept\"\n---\n\n# Code\n\n```markdown\n[target]: ./missing.md\n[target]\n```\n\nNo import is declared.\n"
+      },
+      "expected": { "documents": 1, "imports": 0, "references": 0, "mentions": 0 }
+    },
+    {
+      "name": "inline-code-is-inert",
+      "files": {
+        "knowledge/source.md": "---\nid: \"019ff950-0013-7000-8000-000000000016\"\ntype: \"concept\"\n---\n\n[target]: ./target.md\n\n# Inline Code\n\nUse `[target]` only as an example.\n",
+        "knowledge/target.md": "---\nid: \"019ff950-0013-7000-8000-000000000017\"\ntype: \"concept\"\n---\n\n# Target\n\nA target.\n"
+      },
+      "expected": { "documents": 2, "imports": 1, "references": 0, "mentions": 0, "warnings": ["KB204"] }
+    },
+    {
+      "name": "two-aliases-one-target",
+      "files": {
+        "knowledge/source.md": "---\nid: \"019ff950-0014-7000-8000-000000000018\"\ntype: \"concept\"\n---\n\n[auth]: ./target.md\n[login]: ./target.md\n\n# Aliases\n\nUse [auth] and [login].\n",
+        "knowledge/target.md": "---\nid: \"019ff950-0014-7000-8000-000000000019\"\ntype: \"concept\"\n---\n\n# Target\n\nA shared target.\n"
+      },
+      "expected": { "documents": 2, "imports": 2, "references": 2, "mentions": 0 }
+    }
+  ]
+}

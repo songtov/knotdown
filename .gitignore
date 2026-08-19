@@ -1,0 +1,15 @@
+node_modules/
+dist/
+coverage/
+*.log
+.DS_Store
+.env
+.env.*
+!.env.example
+.npmrc
+**/.knowledge/dist/
+**/.knowledge/.dist-*/
+**/.knowledge/.backup-*/
+
+# Maintainer-only local plans
+/.maintainer-local/

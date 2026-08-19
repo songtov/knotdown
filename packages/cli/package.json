@@ -1,0 +1,10 @@
+{
+  "name": "@knotdown/cli",
+  "version": "0.0.0",
+  "private": true,
+  "description": "The command-line interface for the Knotdown knowledge framework.",
+  "type": "module",
+  "bin": {
+    "knotdown": "./src/main.ts"
+  }
+}

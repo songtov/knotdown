@@ -1,0 +1,62 @@
+{
+  "description": "Invalid and boundary conformance cases.",
+  "cases": [
+    {
+      "name": "missing-id",
+      "files": { "knowledge/index.md": "---\ntype: \"concept\"\n---\n\n# Missing ID\n\nInvalid.\n" },
+      "expected_codes": ["KB101"]
+    },
+    {
+      "name": "duplicate-id",
+      "files": {
+        "knowledge/a.md": "---\nid: \"019ff951-0002-7000-8000-000000000001\"\ntype: \"concept\"\n---\n\n# A\n\nA.\n",
+        "knowledge/b.md": "---\nid: \"019ff951-0002-7000-8000-000000000001\"\ntype: \"concept\"\n---\n\n# B\n\nB.\n"
+      },
+      "expected_codes": ["KB102"]
+    },
+    {
+      "name": "malformed-yaml",
+      "files": { "knowledge/index.md": "---\nid: [unterminated\ntype: \"concept\"\n---\n\n# Bad YAML\n\nInvalid.\n" },
+      "expected_codes": ["KB401"]
+    },
+    {
+      "name": "missing-import-target",
+      "files": { "knowledge/index.md": "---\nid: \"019ff951-0004-7000-8000-000000000003\"\ntype: \"concept\"\n---\n\n[missing]: ./missing.md\n\n# Missing Target\n\nSee [missing].\n" },
+      "expected_codes": ["KB201"]
+    },
+    {
+      "name": "project-boundary-escape",
+      "files": { "knowledge/index.md": "---\nid: \"019ff951-0005-7000-8000-000000000004\"\ntype: \"concept\"\n---\n\n[outside]: ../../../outside.md\n\n# Escape\n\nSee [outside].\n" },
+      "expected_codes": ["KB202"]
+    },
+    {
+      "name": "symlink-escape",
+      "setup": "symlink-outside-project",
+      "expected_codes": ["KB202"]
+    },
+    {
+      "name": "duplicate-local-label",
+      "files": {
+        "knowledge/source.md": "---\nid: \"019ff951-0007-7000-8000-000000000005\"\ntype: \"concept\"\n---\n\n[target]: ./a.md\n[TARGET]: ./b.md\n\n# Duplicate Label\n\nSee [target].\n",
+        "knowledge/a.md": "---\nid: \"019ff951-0007-7000-8000-000000000006\"\ntype: \"concept\"\n---\n\n# A\n\nA.\n",
+        "knowledge/b.md": "---\nid: \"019ff951-0007-7000-8000-000000000007\"\ntype: \"concept\"\n---\n\n# B\n\nB.\n"
+      },
+      "expected_codes": ["KB203"]
+    },
+    {
+      "name": "missing-type",
+      "files": { "knowledge/index.md": "---\nid: \"019ff951-0008-7000-8000-000000000008\"\n---\n\n# Missing Type\n\nInvalid.\n" },
+      "expected_codes": ["KB401"]
+    },
+    {
+      "name": "missing-h1",
+      "files": { "knowledge/index.md": "---\nid: \"019ff951-0009-7000-8000-000000000009\"\ntype: \"concept\"\n---\n\nOnly a paragraph.\n" },
+      "expected_codes": ["KB401"]
+    },
+    {
+      "name": "invalid-document-uuid",
+      "files": { "knowledge/index.md": "---\nid: \"not-a-uuid\"\ntype: \"concept\"\n---\n\n# Bad UUID\n\nInvalid.\n" },
+      "expected_codes": ["KB401"]
+    }
+  ]
+}

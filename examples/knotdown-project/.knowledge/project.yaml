@@ -1,0 +1,50 @@
+spec: "0.1"
+
+project:
+  id: "019ff93d-0a67-79a4-b0bb-556994a0cf18"
+  slug: "knotdown"
+  title: "Knotdown Framework"
+  language: "ko"
+
+content:
+  roots:
+    - "knowledge"
+  include:
+    - "**/*.md"
+  exclude:
+    - "**/archive/**"
+
+identity:
+  strategy: "uuidv7"
+  require_document_id: true
+
+imports:
+  allow_outside_project: false
+  allow_symlink_escape: false
+  warn_unused: true
+
+mentions:
+  enabled: true
+  mode: "imported-labels"
+  strength: "weak"
+  mutate_source: false
+
+retrieval:
+  default_depth: 1
+  max_depth: 3
+  default_token_budget: 4000
+  max_documents: 12
+  semantic_search: "optional"
+
+build:
+  output: ".knowledge/dist"
+  emit:
+    - "markdown"
+    - "json"
+    - "graph"
+    - "site"
+    - "llms-txt"
+
+server:
+  host: "127.0.0.1"
+  port: 4317

@@ -1,0 +1,8 @@
+{
+  "name": "@knotdown/core",
+  "version": "0.0.0",
+  "private": true,
+  "description": "The project-scoped Markdown compiler and knowledge runtime for Knotdown.",
+  "type": "module",
+  "exports": "./src/index.ts"
+}

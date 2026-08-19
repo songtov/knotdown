@@ -1,0 +1,11 @@
+export { compileProject } from "./compiler.ts";
+export { buildContext } from "./context.ts";
+export { createKnowledgeRuntime, KnowledgeRuntime, KnowledgeRuntimeError } from "./runtime.ts";
+export { emitArtifacts } from "./artifacts.ts";
+export { loadIdentitySidecar, writeIdentitySidecar } from "./identity.ts";
+export { adoptProject, initProject } from "./project.ts";
+export type { ProjectPreset } from "./project.ts";
+export { parseMarkdown } from "./markdown.ts";
+export { parseYaml, YamlParseError } from "./yaml.ts";
+export { estimateTokens, generateUuidV7, normalizeLabel, stableJson } from "./util.ts";
+export type * from "./types.ts";

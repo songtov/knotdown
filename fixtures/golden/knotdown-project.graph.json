@@ -1,0 +1,80 @@
+{
+  "edge_counts": {
+    "imports": 18,
+    "mentions": 1,
+    "references": 18
+  },
+  "imports": [
+    "Knotdown -> Background Context [context-model]",
+    "Knotdown -> Project Boundary [프로젝트 경계]",
+    "Knotdown -> Compiler and Runtime [compiler-runtime]",
+    "Knotdown -> Markdown Contract [markdown-contract]",
+    "Knotdown -> Obsidian Adoption [obsidian-adoption]",
+    "Knotdown -> MCP Integration [mcp-integration]",
+    "Knotdown -> Context Diagnostics [diagnostics-runbook]",
+    "Background Context -> Project Boundary [scope-contract]",
+    "Compiler and Runtime -> Background Context [context-model]",
+    "Compiler and Runtime -> Project Boundary [scope-contract]",
+    "Compiler and Runtime -> Markdown Contract [markdown-contract]",
+    "Markdown Contract -> Project Boundary [scope-contract]",
+    "Obsidian Adoption -> Project Boundary [scope-contract]",
+    "Obsidian Adoption -> Markdown Contract [markdown-contract]",
+    "MCP Integration -> Background Context [context-model]",
+    "MCP Integration -> Compiler and Runtime [compiler-runtime]",
+    "Context Diagnostics -> Project Boundary [scope-contract]",
+    "Context Diagnostics -> Compiler and Runtime [compiler-runtime]"
+  ],
+  "mentions": [
+    "Knotdown -> Project Boundary [프로젝트 경계]"
+  ],
+  "nodes": [
+    {
+      "path": "knowledge/00-overview.md",
+      "status": "stable",
+      "title": "Knotdown",
+      "type": "guide"
+    },
+    {
+      "path": "knowledge/concepts/background-context.md",
+      "status": "stable",
+      "title": "Background Context",
+      "type": "concept"
+    },
+    {
+      "path": "knowledge/concepts/project-boundary.md",
+      "status": "stable",
+      "title": "Project Boundary",
+      "type": "concept"
+    },
+    {
+      "path": "knowledge/architecture/compiler-runtime.md",
+      "status": "stable",
+      "title": "Compiler and Runtime",
+      "type": "architecture"
+    },
+    {
+      "path": "knowledge/reference/markdown-contract.md",
+      "status": "stable",
+      "title": "Markdown Contract",
+      "type": "reference"
+    },
+    {
+      "path": "knowledge/guides/obsidian-adoption.md",
+      "status": "stable",
+      "title": "Obsidian Adoption",
+      "type": "guide"
+    },
+    {
+      "path": "knowledge/integrations/mcp.md",
+      "status": "stable",
+      "title": "MCP Integration",
+      "type": "integration"
+    },
+    {
+      "path": "knowledge/runbooks/context-diagnostics.md",
+      "status": "stable",
+      "title": "Context Diagnostics",
+      "type": "runbook"
+    }
+  ]
+}

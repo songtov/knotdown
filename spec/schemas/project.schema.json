@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://knotdown.local/spec/0.1/project.schema.json",
+  "title": "Knotdown project configuration 0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["spec", "project", "content"],
+  "properties": {
+    "spec": { "const": "0.1" },
+    "project": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "slug", "title"],
+      "properties": {
+        "id": { "type": "string", "format": "uuid" },
+        "slug": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+        "title": { "type": "string", "minLength": 1 },
+        "language": { "type": "string", "minLength": 2 }
+      }
+    },
+    "content": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["roots"],
+      "properties": {
+        "roots": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+        "include": { "type": "array", "items": { "type": "string" }, "default": ["**/*.md"] },
+        "exclude": { "type": "array", "items": { "type": "string" }, "default": [] },
+        "dialect": { "enum": ["standard", "obsidian"], "default": "standard" }
+      }
+    },
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "strategy": { "const": "uuidv7" },
+        "require_document_id": { "type": "boolean", "default": true }
+      }
+    },
+    "imports": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "allow_outside_project": { "const": false },
+        "allow_symlink_escape": { "const": false },
+        "warn_unused": { "type": "boolean", "default": true }
+      }
+    },
+    "mentions": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": { "type": "boolean", "default": false },
+        "mode": { "const": "imported-labels" },
+        "strength": { "const": "weak" },
+        "mutate_source": { "const": false }
+      }
+    },
+    "retrieval": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "default_depth": { "type": "integer", "minimum": 0, "maximum": 3, "default": 1 },
+        "max_depth": { "type": "integer", "minimum": 0, "maximum": 10, "default": 3 },
+        "default_token_budget": { "type": "integer", "minimum": 1, "default": 6000 },
+        "max_documents": { "type": "integer", "minimum": 1, "default": 16 },
+        "semantic_search": { "enum": ["disabled", "optional"], "default": "optional" }
+      }
+    },
+    "build": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "output": { "type": "string", "default": ".knowledge/dist" },
+        "emit": { "type": "array", "uniqueItems": true, "items": { "enum": ["site", "markdown", "json", "graph", "llms-txt", "okf"] } }
+      }
+    },
+    "server": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "host": { "const": "127.0.0.1" },
+        "port": { "type": "integer", "minimum": 1, "maximum": 65535 }
+      }
+    }
+  }
+}

@@ -1,0 +1,40 @@
+spec: "0.1"
+
+project:
+  id: "019ff93d-1b78-7aa4-a0bb-556994a0cf19"
+  slug: "research-project"
+  title: "Research Project Knowledge"
+  language: "en"
+
+content:
+  roots:
+    - "knowledge"
+  include:
+    - "**/*.md"
+  exclude: []
+
+imports:
+  allow_outside_project: false
+  allow_symlink_escape: false
+  warn_unused: true
+
+mentions:
+  enabled: false
+  mode: "imported-labels"
+  strength: "weak"
+  mutate_source: false
+
+retrieval:
+  default_depth: 1
+  max_depth: 3
+  default_token_budget: 3000
+  max_documents: 10
+  semantic_search: "disabled"
+
+build:
+  output: ".knowledge/dist"
+  emit: ["markdown", "json", "graph", "site", "llms-txt"]
+
+server:
+  host: "127.0.0.1"
+  port: 4318

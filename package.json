@@ -1,0 +1,74 @@
+{
+  "name": "knotdown",
+  "version": "0.1.0-alpha.1",
+  "description": "A Markdown background-context framework for people and AI agents.",
+  "license": "Apache-2.0",
+  "keywords": [
+    "markdown",
+    "knowledge-graph",
+    "obsidian",
+    "mcp",
+    "ai-context"
+  ],
+  "type": "module",
+  "bin": {
+    "knotdown": "./dist/packages/cli/src/main.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/packages/core/src/index.d.ts",
+      "import": "./dist/packages/core/src/index.js"
+    },
+    "./server": {
+      "types": "./dist/packages/server/src/index.d.ts",
+      "import": "./dist/packages/server/src/index.js"
+    },
+    "./web": {
+      "types": "./dist/packages/web/src/index.d.ts",
+      "import": "./dist/packages/web/src/index.js"
+    },
+    "./mcp": {
+      "types": "./dist/packages/mcp/src/index.d.ts",
+      "import": "./dist/packages/mcp/src/index.js"
+    }
+  },
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md",
+    "SECURITY.md"
+  ],
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "clean": "node scripts/clean.mjs",
+    "typecheck": "tsc --project tsconfig.json",
+    "build": "tsc --project tsconfig.build.json",
+    "test": "node --test tests/*.test.ts",
+    "verify": "npm run typecheck && npm test && npm run build",
+    "release:check": "node scripts/release-check.mjs",
+    "prepack": "npm run clean && npm run build",
+    "check:example": "node packages/cli/src/main.ts check examples/knotdown-project",
+    "build:example": "node packages/cli/src/main.ts build examples/knotdown-project",
+    "dev:example": "node packages/cli/src/main.ts dev examples/knotdown-project",
+    "dev:knotdown": "node packages/cli/src/main.ts dev examples/knotdown-project",
+    "dev:software": "node packages/cli/src/main.ts dev examples/knotdown-project",
+    "dev:research": "node packages/cli/src/main.ts dev examples/research-project",
+    "dev:obsidian": "node packages/cli/src/main.ts dev examples/obsidian-vault/product-alpha",
+    "build:examples": "node scripts/build-examples.mjs",
+    "context:example": "node packages/cli/src/main.ts context examples/knotdown-project --entry knowledge/reference/markdown-contract.md --query '기존 Markdown을 Agent 배경으로 제공하는 방법' --budget 4000"
+  },
+  "engines": {
+    "node": ">=22.18"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "devDependencies": {
+    "@types/node": "26.2.0",
+    "typescript": "7.0.2"
+  }
+}
