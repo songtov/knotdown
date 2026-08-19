@@ -172,7 +172,7 @@ test("graph and build ID are deterministic and match the golden graph", async ()
     })),
   };
   const golden = await readFile(path.join(repositoryRoot, "fixtures/golden/knotdown-project.graph.json"), "utf8");
-  assert.equal(stableJson(signature), golden);
+  assert.equal(stableJson(signature), golden.replace(/\r\n?/gu, "\n"));
 });
 
 test("context is scoped, explainable, cycle-safe, and within budget", async (t) => {
